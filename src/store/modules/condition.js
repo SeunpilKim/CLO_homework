@@ -9,7 +9,7 @@ export const setKeywords = (keywords) => ({ type: SET_KEYWORDS, keywords })
 // 초기 상태 정의
 const initialState = {
     pricingOption: [],
-    keyWords: '',
+    keywords: '',
 } ;
 
 // 리듀서 작성
@@ -23,7 +23,7 @@ export default function Condition(state=initialState, action) {
         case SET_KEYWORDS:
             return {
                 ...state,
-                keyWords: action.keyWords
+                keywords: action.keywords
             }
         default:
             return state ;

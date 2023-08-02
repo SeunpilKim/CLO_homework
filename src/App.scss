@@ -1,0 +1,17 @@
+
+
+html, body, #root {
+    height: 100%;
+    margin: 0
+}
+
+.App {
+    height: 100%;
+    padding: 20px 12px;
+    background-color: #1b1a21;
+
+    .keyword-wrapper {
+        background-color: #212026;
+
+    }
+}

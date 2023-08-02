@@ -1,0 +1,32 @@
+.wrapper {
+    display: flex;
+    height: 50px;
+    padding: 4px 8px;
+    align-items: center;
+    &.keyword {
+        background-color: #212026;
+        input {
+            width: 100%;
+            height: 100%;
+            border: none !important;
+            color: white;
+            background-color: #212026;
+        }
+    
+        svg {
+            margin-left: auto;
+            cursor: pointer;
+        }
+    }
+
+    &.filter {
+        color: white;
+        .checkbox-option {
+            margin: 0 4px;   
+        }
+        button {
+            margin-left: auto;
+            cursor: pointer;
+        }
+    }
+}

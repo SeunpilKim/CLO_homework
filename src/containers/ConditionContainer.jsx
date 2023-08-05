@@ -7,6 +7,8 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown';
 import Icon from '@mdi/react';
 import { mdiMagnify  } from '@mdi/js';
 
@@ -29,7 +31,6 @@ const ConditionContainer = () => {
     }
 
     const handleChangeKeywords = () => {
-        console.log(searchKeyword)
         dispatch({ type: 'SET_KEYWORDS', keywords: searchKeyword })
     }
 
@@ -97,18 +98,16 @@ const ConditionContainer = () => {
                         </Button>
                     </Form>
                 </Col>
-
-                <div style={{ color: 'white' }}>{ conditionState.keywords }</div>
-                <div style={{ color: 'white' }}>
-                    {
-                        conditionState.pricingOption.map(option => {
-                            return (
-                                <div>{ option }</div>
-                            )
-                        })
-                    }
-                </div>
             </Row>
+            {/* <Row>
+                <Col className="d-flex">
+                    <DropdownButton className="ml-auto">
+                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                    </DropdownButton>
+                </Col>
+            </Row> */}
         </>
     )
 }

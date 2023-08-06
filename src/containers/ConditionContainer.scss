@@ -28,7 +28,7 @@
     &.filter {
         color: white;
         align-items: center;
-        margin-bottom: 12px;
+        margin-bottom: 4px;
         .form-text {
             color: white;
             margin-top: 0;
@@ -36,6 +36,26 @@
         }
         .checkbox-option {
             margin: 0 4px;   
+        }
+        .price-slider {
+            width: 200px;
+            height: 50px;
+            margin-left: 12px;
+            &.disabled {
+                opacity: 0.4;
+            }
+            .slider-track {
+                top: 20px;
+                height: 10px;
+                background-color: green
+            }
+            .slider-thumb {
+                background-color: white;
+                border-radius: 50%;
+                width: 15px;
+                height: 15px;
+                top: 17px;
+            }
         }
         button {
             margin-left: auto;

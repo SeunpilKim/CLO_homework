@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { setPricingOption, setKeywords } from '../store/modules/condition';
-
+import { setPricingOption, setKeywords, setSortBy, setSliderValue } from '../store/modules/condition';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-import DropdownButton from 'react-bootstrap/DropdownButton'
-import Dropdown from 'react-bootstrap/Dropdown';
 import Icon from '@mdi/react';
 import { mdiMagnify  } from '@mdi/js';
+import ReactSlider from 'react-slider';
 
 import './ConditionContainer.scss'
 
@@ -50,6 +48,15 @@ const ConditionContainer = () => {
 
     const handleEmptyPricingOption = () => {
         dispatch({ type: 'SET_PRICING_OPTION', pricingOption: [] })
+        dispatch({ type: 'SET_SLIDER_VALUE', sliderValue: [0,999] })
+    }
+
+    const handleSliderChange = (val) => {
+        dispatch({ type: 'SET_SLIDER_VALUE', sliderValue: val })
+    }
+
+    const handleChangeSortBy = (e) => {
+        dispatch({ type: 'SET_SORTBY', sortBy: e.target.value })
     }
 
     return (
@@ -93,32 +100,63 @@ const ConditionContainer = () => {
                                 )
                             })
                         }
+                        <span style={{ marginLeft: '12px', marginRight: '8px', opacity: !conditionState.pricingOption.includes('PAID') ? 0.4 : 1}}>{ `$ ${conditionState.sliderValue[0]}` }</span>
+                        <ReactSlider 
+                            className="price-slider"
+                            thumbClassName="slider-thumb"
+                            trackClassName="slider-track"
+                            defaultValue={conditionState.sliderValue}
+                            value={conditionState.sliderValue}
+                            min={0}
+                            max={999}
+                            disabled={!conditionState.pricingOption.includes('PAID')}
+                            renderThumb={(props, state) => <div {...props}></div>}
+                            pearling
+                            minDistance={10}
+                            onChange={handleSliderChange}
+                        />
+                        <span className="" style={{ marginLeft: '8px', opacity: !conditionState.pricingOption.includes('PAID') ? 0.4 : 1}}>{ `$ ${conditionState.sliderValue[1]}` }</span>
                         <Button variant="outline-secondary" id="button-addon2" onClick={handleEmptyPricingOption}>
                             Reset
                         </Button>
                     </Form>
                 </Col>
             </Row>
-            {/* <Row>
-                <Col className="d-flex">
-                    <DropdownButton className="ml-auto">
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                    </DropdownButton>
+            <Row>
+                <Col className="d-flex" style={{ marginBottom: '12px' }}>
+                    <div className="d-flex px-1" style={{ marginLeft: 'auto' }}>
+                        <span style={{ fontWeight: 700, color: 'white', marginRight: '8px' }}>Sort By</span>                        
+                        <select
+                            onChange={handleChangeSortBy}
+                            key={`select-sortby`}
+                            
+                            defaultValue={conditionState.sortBy}
+                        >
+                            <option value={'name'}>
+                                {'Item Name'}
+                            </option>
+                            <option value={'highPrice'}>
+                                {'Higher Price'}
+                            </option>
+                            <option value={'lowPrice'}>
+                                {'Lower Price'}
+                            </option>
+                        </select>
+                    </div>
                 </Col>
-            </Row> */}
+            </Row>
         </>
     )
 }
 
 const mapStateToProps = ({ condition }) => ({
     pricingOption: condition.pricingOption,
-    keyWords: condition.keyWords
+    keyWords: condition.keyWords,
+    sortBy: condition.sortBy,
+    sliderValue: condition.sliderValue
 });
 
-const mapDispatchToProps = { setPricingOption, setKeywords } ; 
-
+const mapDispatchToProps = { setPricingOption, setKeywords, setSortBy, setSliderValue } ; 
 
 export default connect(
     mapStateToProps,

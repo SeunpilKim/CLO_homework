@@ -26,13 +26,16 @@ const CardComponent = ({ item }) => {
         if (conditionState.pricingOption.length === 0 && conditionState.keywords === '') return ''
         const isCheckedOption = conditionState.pricingOption.includes(PRICING_OPTION[item.pricingOption])
         const isContainedKeywords = item.title.indexOf(conditionState.keywords) !== -1 || item.creator.indexOf(conditionState.keywords) !== -1
+        const isContainedPrice = conditionState.sliderValue[0] <= item.price && item.price <= conditionState.sliderValue[1]
+
+        const isPaidCheckedAndPaidItem = conditionState.pricingOption.includes('PAID') && item.pricingOption === PRICING_OPTION.PAID
 
         if (conditionState.keywords) {
-            if ((conditionState.pricingOption.length > 0 && !isCheckedOption) || !isContainedKeywords) {
+            if ((isPaidCheckedAndPaidItem && !isContainedPrice) || (conditionState.pricingOption.length > 0 && !isCheckedOption) || !isContainedKeywords) {
                 return 'none'
             }
         } else {
-            if (!isCheckedOption) {
+            if ((isPaidCheckedAndPaidItem && !isContainedPrice) || !isCheckedOption) {
                 return 'none'
             }
         }
@@ -61,9 +64,9 @@ const CardComponent = ({ item }) => {
 
 const mapStateToProps = ({ condition }) => ({
     pricingOption: condition.pricingOption,
-    keyWords: condition.keyWords
+    keyWords: condition.keyWords,
+    sliderValue: condition.sliderValue
 });
-
 
 export default connect(
     mapStateToProps,
